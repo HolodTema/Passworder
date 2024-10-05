@@ -1,4 +1,4 @@
-package com.terabyte.passworder
+package com.terabyte.passworder.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
