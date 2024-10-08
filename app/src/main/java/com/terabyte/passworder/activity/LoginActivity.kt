@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,12 +29,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.terabyte.passworder.R
 import com.terabyte.passworder.ui.theme.PassworderTheme
+import com.terabyte.passworder.viewmodel.LoginViewModel
 
 class LoginActivity : ComponentActivity() {
+
+    private val viewModel: LoginViewModel by viewModels {
+        LoginViewModel.Factory()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             PassworderTheme {
@@ -43,135 +52,132 @@ class LoginActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Composable
-fun MainContent(paddingVals: PaddingValues) {
-    ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingVals)
-    ) {
-        val (numBoard, fieldPassword) = createRefs()
-
-        FieldPassword(
-            Modifier
-                .constrainAs(fieldPassword) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(numBoard.top)
-                    top.linkTo(parent.top)
-                }
-        )
-        NumBoard(
-            Modifier
-                .constrainAs(numBoard) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-        )
-
-
-    }
-}
-
-@Composable
-fun FieldPassword(modifier: Modifier) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .then(modifier)
-    ) {
-        Text(
-            text = "Enter password:",
-            fontSize = 24.sp,
-            color = Color.Gray,
-            textAlign = TextAlign.Center,
+    @Composable
+    fun MainContent(paddingVals: PaddingValues) {
+        ConstraintLayout(
             modifier = Modifier
-                .fillMaxWidth()
-        )
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .fillMaxWidth()
+                .fillMaxSize()
+                .padding(paddingVals)
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_password_char),
-                contentDescription = "char",
-                tint = Color.Gray
+            val (numBoard, fieldPassword) = createRefs()
+
+            FieldPassword(
+                Modifier
+                    .constrainAs(fieldPassword) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(numBoard.top)
+                        top.linkTo(parent.top)
+                    }
             )
-            Icon(
-                painter = painterResource(id = R.drawable.ic_password_char),
-                contentDescription = "char",
-                tint = Color.Gray
+            NumBoard(
+                Modifier
+                    .constrainAs(numBoard) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
             )
-            Icon(
-                painter = painterResource(id = R.drawable.ic_password_char),
-                contentDescription = "char",
-                tint = Color.Gray
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.ic_password_char),
-                contentDescription = "char",
-                tint = Color.Gray
-            )
+
+
         }
     }
-}
 
-@Composable
-fun NumBoard(modifier: Modifier) {
-    Column(
-        verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .fillMaxWidth(0.7f)
-            .fillMaxHeight(0.5f)
-            .then(modifier)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+    @Composable
+    fun FieldPassword(modifier: Modifier) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(0.9f)
+                .then(modifier)
         ) {
-            ButtonNum(num = "1")
-            ButtonNum(num = "2")
-            ButtonNum(num = "3")
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            ButtonNum(num = "4")
-            ButtonNum(num = "5")
-            ButtonNum(num = "6")
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            ButtonNum(num = "7")
-            ButtonNum(num = "8")
-            ButtonNum(num = "9")
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            ButtonFingerprint()
-            ButtonNum(num = "0")
-            ButtonBackspace()
+            Text(
+                text = "Enter password:",
+                fontSize = 24.sp,
+                color = Color.Gray,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .fillMaxWidth()
+            ) {
+                IconPasswordCharacter(number = 1)
+                IconPasswordCharacter(number = 2)
+                IconPasswordCharacter(number = 3)
+                IconPasswordCharacter(number = 4)
+            }
         }
     }
-}
 
-@Composable
-fun ButtonNum(num: String) {
+    @Composable
+    fun NumBoard(modifier: Modifier) {
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth(0.7f)
+                .fillMaxHeight(0.5f)
+                .then(modifier)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                ButtonNum(num = "1")
+                ButtonNum(num = "2")
+                ButtonNum(num = "3")
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                ButtonNum(num = "4")
+                ButtonNum(num = "5")
+                ButtonNum(num = "6")
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                ButtonNum(num = "7")
+                ButtonNum(num = "8")
+                ButtonNum(num = "9")
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                ButtonFingerprint()
+                ButtonNum(num = "0")
+                ButtonBackspace()
+            }
+        }
+    }
+
+    @Composable
+    fun IconPasswordCharacter(number: Int) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_password_char),
+            contentDescription = "char",
+            tint = if (viewModel.statePasswordField.value.length >= number) {
+                Color.Black
+            } else {
+                Color.Gray
+            }
+        )
+    }
+
+    @Composable
+    fun ButtonNum(num: String) {
+        val viewModel: LoginViewModel = viewModel()
         Text(
             text = num,
             color = Color.Blue,
@@ -181,42 +187,56 @@ fun ButtonNum(num: String) {
                 .height(60.dp)
                 .width(60.dp)
                 .clickable {
-
+                    if (viewModel.statePasswordField.value.length < 4) {
+                        viewModel.statePasswordField.value += num
+                        if (viewModel.statePasswordField.value.length == 4) {
+                            viewModel.checkPassword()
+                        }
+                    }
                 }
         )
-}
+    }
 
-@Composable
-fun ButtonFingerprint() {
-    IconButton(
-        onClick = { /*TODO*/ },
-        modifier = Modifier
-            .size(60.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_fingerprint),
-            contentDescription = "fingerprint",
-            tint = Color.Blue,
+    @Composable
+    fun ButtonFingerprint() {
+        IconButton(
+            onClick = { /*TODO*/ },
             modifier = Modifier
-                .size(50.dp)
-        )
+                .size(60.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_fingerprint),
+                contentDescription = "fingerprint",
+                tint = Color.Blue,
+                modifier = Modifier
+                    .size(50.dp)
+            )
+        }
+    }
+
+    @Composable
+    fun ButtonBackspace() {
+        val viewModel: LoginViewModel = viewModel()
+        IconButton(
+            onClick = {
+                if(viewModel.statePasswordField.value.length in 1..3) {
+                    val passwordLen = viewModel.statePasswordField.value.length
+                    viewModel.statePasswordField.value = viewModel.statePasswordField.value.substring(0, passwordLen-1)
+                }
+            },
+            modifier = Modifier
+                .size(60.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_backspace),
+                contentDescription = "backspace",
+                tint = Color.Blue,
+                modifier = Modifier
+                    .size(50.dp)
+            )
+        }
     }
 }
 
-@Composable
-fun ButtonBackspace() {
-    IconButton(
-        onClick = { /*TODO*/ },
-        modifier = Modifier
-            .size(60.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_backspace),
-            contentDescription = "backspace",
-            tint = Color.Blue,
-            modifier = Modifier
-                .size(50.dp)
-        )
-    }
-}
+
 

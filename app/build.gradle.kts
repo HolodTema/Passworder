@@ -51,6 +51,9 @@ android {
 }
 
 dependencies {
+    //viewModel for Jetpack Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
     //Dagger2
     implementation(libs.google.dagger)
     kapt(libs.google.dagger.compiler)
