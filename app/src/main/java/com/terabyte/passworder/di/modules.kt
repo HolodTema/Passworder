@@ -1,7 +1,7 @@
 package com.terabyte.passworder.di
 
 import android.content.Context
-import com.terabyte.passworder.data.DataStoreManager
+import com.terabyte.passworder.data.datastore.DataStoreManager
 import com.terabyte.passworder.util.HashManager
 import dagger.Module
 import dagger.Provides

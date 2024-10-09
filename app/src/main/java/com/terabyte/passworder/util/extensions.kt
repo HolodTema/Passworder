@@ -5,7 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.terabyte.passworder.application.MyApplication
-import com.terabyte.passworder.data.DataStoreManager
+import com.terabyte.passworder.data.datastore.DataStoreManager
 import com.terabyte.passworder.di.AppComponent
 
 @Suppress("RecursivePropertyAccessor")

@@ -1,12 +1,10 @@
 package com.terabyte.passworder.viewmodel
 
 import android.content.Context
-import android.content.Intent
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.terabyte.passworder.activity.MainActivity
-import com.terabyte.passworder.data.DataStoreManager
+import com.terabyte.passworder.data.datastore.DataStoreManager
 import com.terabyte.passworder.util.HashManager
 import com.terabyte.passworder.util.appComponent
 import javax.inject.Inject

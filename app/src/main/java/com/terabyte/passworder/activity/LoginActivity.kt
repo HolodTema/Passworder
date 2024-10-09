@@ -2,7 +2,6 @@ package com.terabyte.passworder.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,11 +33,10 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.terabyte.passworder.R
-import com.terabyte.passworder.data.DataStoreManager
+import com.terabyte.passworder.data.datastore.DataStoreManager
 import com.terabyte.passworder.ui.theme.PassworderTheme
 import com.terabyte.passworder.util.HashManager
 import com.terabyte.passworder.util.appComponent
-import com.terabyte.passworder.util.dataStore
 import com.terabyte.passworder.viewmodel.LoginViewModel
 import javax.inject.Inject
 

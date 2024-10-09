@@ -12,8 +12,11 @@ constraintlayout = "1.0.1"
 dagger = "2.52"
 viewModelCompose = "2.8.6"
 datastorePreferences = "1.1.1"
+room = "2.6.1"
 
 [libraries]
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferences" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewModelCompose" }
 google-dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }

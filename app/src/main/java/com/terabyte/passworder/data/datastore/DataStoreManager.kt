@@ -1,4 +1,4 @@
-package com.terabyte.passworder.data
+package com.terabyte.passworder.data.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.Preferences
@@ -9,9 +9,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Singleton
 
