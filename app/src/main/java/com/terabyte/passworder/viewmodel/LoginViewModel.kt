@@ -11,8 +11,8 @@ import com.terabyte.passworder.util.HashManager
 import com.terabyte.passworder.util.appComponent
 import javax.inject.Inject
 
-//private val dataStoreManager: DataStoreManager, private val hashManager: HashManager
-class LoginViewModel(private val context: Context): ViewModel() {
+
+class LoginViewModel(context: Context): ViewModel() {
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
@@ -26,13 +26,13 @@ class LoginViewModel(private val context: Context): ViewModel() {
         context.appComponent.inject(this)
     }
 
-    fun checkPassword(failureListener: () -> Unit) {
+    fun checkPassword(successListener: () -> Unit, failureListener: () -> Unit) {
         val passwd = statePasswordField.value
         val passwdHashed = hashManager.hash(passwd)
         dataStoreManager.readFromDataStore(DataStoreManager.KEY_LOGIN_PASSWORD) { savedPasswd ->
             if(savedPasswd!=null) {
                 if (passwdHashed==savedPasswd) {
-                    startMainActivity()
+                    successListener()
                 }
                 else {
                     statePasswordField.value = ""
@@ -40,17 +40,11 @@ class LoginViewModel(private val context: Context): ViewModel() {
                 }
             }
             else {
-                startMainActivity()
+                successListener()
             }
         }
     }
 
-    private fun startMainActivity() {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        context.startActivity(intent)
-    }
 
     class Factory(private val context: Context): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

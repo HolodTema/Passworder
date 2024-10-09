@@ -1,5 +1,6 @@
 package com.terabyte.passworder.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract.Data
 import android.widget.Toast
@@ -208,12 +209,6 @@ class LoginActivity : ComponentActivity() {
         )
     }
 
-    private fun checkPassword() {
-        viewModel.checkPassword {
-            Toast.makeText(this, "Invalid password", Toast.LENGTH_LONG).show()
-        }
-    }
-
     @Composable
     fun ButtonFingerprint() {
         IconButton(
@@ -252,6 +247,21 @@ class LoginActivity : ComponentActivity() {
                     .size(50.dp)
             )
         }
+    }
+
+    private fun checkPassword() {
+        viewModel.checkPassword(
+            successListener = {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            },
+            failureListener = {
+                Toast.makeText(this, "Invalid password", Toast.LENGTH_LONG).show()
+
+            }
+        )
     }
 
     private fun dev() {
