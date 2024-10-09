@@ -51,6 +51,9 @@ android {
 }
 
 dependencies {
+    //preferences DataStore
+    implementation(libs.androidx.datastore.preferences)
+
     //viewModel for Jetpack Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 

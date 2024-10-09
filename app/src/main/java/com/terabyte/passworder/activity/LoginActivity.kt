@@ -1,6 +1,8 @@
 package com.terabyte.passworder.activity
 
 import android.os.Bundle
+import android.provider.ContactsContract.Data
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,18 +33,27 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.terabyte.passworder.R
+import com.terabyte.passworder.data.DataStoreManager
 import com.terabyte.passworder.ui.theme.PassworderTheme
+import com.terabyte.passworder.util.HashManager
+import com.terabyte.passworder.util.appComponent
+import com.terabyte.passworder.util.dataStore
 import com.terabyte.passworder.viewmodel.LoginViewModel
+import javax.inject.Inject
 
 class LoginActivity : ComponentActivity() {
 
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
+
     private val viewModel: LoginViewModel by viewModels {
-        LoginViewModel.Factory()
+        LoginViewModel.Factory(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        appComponent.inject(this)
         super.onCreate(savedInstanceState)
-
+        dev()
         enableEdgeToEdge()
         setContent {
             PassworderTheme {
@@ -190,11 +201,17 @@ class LoginActivity : ComponentActivity() {
                     if (viewModel.statePasswordField.value.length < 4) {
                         viewModel.statePasswordField.value += num
                         if (viewModel.statePasswordField.value.length == 4) {
-                            viewModel.checkPassword()
+                            checkPassword()
                         }
                     }
                 }
         )
+    }
+
+    private fun checkPassword() {
+        viewModel.checkPassword {
+            Toast.makeText(this, "Invalid password", Toast.LENGTH_LONG).show()
+        }
     }
 
     @Composable
@@ -234,6 +251,13 @@ class LoginActivity : ComponentActivity() {
                 modifier = Modifier
                     .size(50.dp)
             )
+        }
+    }
+
+    private fun dev() {
+        val hashed = HashManager().hash("1111")
+        dataStoreManager.writeToDataStore(DataStoreManager.KEY_LOGIN_PASSWORD, hashed) {
+
         }
     }
 }
