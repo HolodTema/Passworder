@@ -2,6 +2,7 @@ package com.terabyte.passworder.di
 
 import android.content.Context
 import com.terabyte.passworder.data.datastore.DataStoreManager
+import com.terabyte.passworder.data.room.RoomManager
 import com.terabyte.passworder.util.HashManager
 import dagger.Module
 import dagger.Provides
@@ -24,6 +25,12 @@ object DataModule {
     @Singleton
     fun provideDataStoreManager(context: Context): DataStoreManager {
         return DataStoreManager(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRoomManager(context: Context): RoomManager {
+        return RoomManager(context)
     }
 }
 
